@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  dockman:
+    container_name: dockman
+    image: ghcr.io/ra341/dockman:latest
+    restart: always
+    ports:
+      - "8866:8866"
+    environment:
+      # 1️⃣ Ruta absoluta a tus compose files
+      - DOCKMAN_COMPOSE_ROOT=/ruta/absoluta/stacks
+      # Desactivar warning auth (si no usas auth)
+      - DOCKMAN_LOG_AUTH_WARNING=false
+    volumes:
+      # 2️⃣ Host side y 3️⃣ Container side DEBEN SER IDÉNTICAS
+      - /ruta/absoluta/stacks:/ruta/absoluta/stacks
+      # Config dir (BD, SSH keys, etc)
+      - /ruta/absoluta/dockman/config:/config
+      # Docker socket para gestionar containers
+      - /var/run/docker.sock:/var/run/docker.sock
