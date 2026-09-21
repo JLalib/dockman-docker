@@ -1,37 +1,42 @@
-# 🐳 Dockman Docker - Gestor visual de Docker Compose autohospedado
+# 🐳 Dockman - Gestor de Docker Compose Autohospedado
 
-[![GitHub](https://img.shields.io/badge/GitHub-RA341%2Fdockman-181717?logo=github)](https://github.com/RA341/dockman)
-[![Docker](https://img.shields.io/badge/Docker-ghcr.io%2Fra341%2Fdockman-2496ED?logo=docker)](https://ghcr.io/ra341/dockman)
-[![License](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.html)
+[![GitHub Stars](https://img.shields.io/github/stars/RA341/dockman?style=for-the-badge&logo=github)](https://github.com/RA341/dockman)
+[![Docker Pulls](https://img.shields.io/docker/pulls/ra341/dockman?style=for-the-badge&logo=docker)](https://hub.docker.com/r/ra341/dockman)
+[![License](https://img.shields.io/github/license/RA341/dockman?style=for-the-badge)](https://github.com/RA341/dockman/blob/main/LICENSE)
+[![GitHub Release](https://img.shields.io/github/v/release/RA341/dockman?style=for-the-badge&logo=github)](https://github.com/RA341/dockman/releases)
 
 ## 📋 Descripción general
 
-Dockman es una interfaz web moderna y accesible para gestionar **docker-compose** de forma visual, diseñada específicamente para **homelabs** que quieren control total sobre sus archivos `.yaml` sin perder la comodidad de una UI intuitiva. A diferencia de Portainer (que abstrae Compose), Dockman mantiene tus archivos Compose como **fuente de verdad** mientras proporciona gestión visual completa.
+**Dockman** es una interfaz web moderna y accesible para gestionar `docker-compose` de forma visual, diseñada específicamente para **homelabs** que quieren control total sobre sus archivos `.yaml` sin perder la comodidad de una UI intuitiva.
+
+A diferencia de Portainer (que abstrae Compose), Dockman mantiene tus archivos Compose como **fuente de verdad** mientras proporciona gestión visual completa. Está construido con **TypeScript + React**, es **open source (AGPL-3.0)** y ofrece soporte **multi-host vía SSH** para gestionar múltiples servidores desde una UI central.
+
+> 📖 **Artículo original**: [Cómo instalar Dockman en Docker - Gestor de Docker Compose autohospedado en Docker](https://genbyte.blogspot.com/2026/08/como-instalar-dockman-gestor-de-docker.html)
 
 ## ✨ Características principales
 
-- **Gestor visual de docker-compose files** – Editor YAML integrado con formatting (Alt+L)
-- **Smart compose detection** – Promociona compose files únicos a nivel top; carpetas con múltiples files como directorios
-- **Control total de contenedores** – Start, stop, restart, logs, shell, rm desde la UI
-- **Gestión de imágenes** – Pull, remove, tags, search
-- **Gestión de volúmenes y networks** – Crear, eliminar, inspeccionar
-- **Multi-host vía SSH** – Gestiona múltiples servidores desde una UI central
-- **Búsqueda instantánea + atajos teclado** – Encuentra containers/imágenes al momento
-- **Dark mode + Responsive** – UI moderna (React + TypeScript) para desktop, tablet, móvil
-- **Configuración centralizada** – `.dockman.yml` con aliases para directorios externos
-- **Persistencia en BD SQLite** – Hosts, SSH keys, settings guardados localmente
-- **AGPL-3.0 open source** – Código accesible, comunidad activa, desarrollo continuo
+- 🎨 **Gestor visual de docker-compose files** - Editor YAML integrado con formatting (Alt+L)
+- 🔍 **Smart compose detection** - Promociona compose files únicos a nivel top; folders con múltiples files como directorios
+- 📦 **Control total de contenedores** - Start, stop, restart, logs, shell, rm desde la UI
+- 🖼️ **Gestión de imágenes** - Pull, remove, tags, search, inspect
+- 💾 **Gestión de volúmenes y networks** - Crear, eliminar, inspeccionar
+- 🌐 **Multi-host vía SSH** - Gestiona múltiples servidores desde UI central
+- ⚡ **Búsqueda instantánea + atajos teclado** - Encuentra containers/imágenes al instante
+- 🌙 **Dark mode + Responsive** - UI moderna, desktop, tablet, móvil
+- ⚙️ **Configuración centralizada** - `.dockman.yml` para aliases, hosts, SSH keys
+- 🗄️ **Persistencia en BD SQLite** - Configuración, hosts, claves guardadas localmente
+- 🔓 **AGPL-3.0 open source** - Código accesible, comunidad activa, desarrollo continuo
 
 ## 📋 Requisitos del sistema
 
-- Docker instalado y funcionando
-- **Docker Socket** (`/var/run/docker.sock`) accesible
-- **100–500 MB RAM** (ligero, NodeJS)
-- **100 MB espacio disco** (imagen + BD config)
-- Puerto **8866** (o personalizable)
-- Volumen persistente para `/config` (BD, SSH keys, settings)
-- Variable de entorno `DOCKMAN_COMPOSE_ROOT` (ruta absoluta a tus compose files)
-- Navegador moderno (Chrome, Firefox, Safari, Edge)
+- ✅ **Docker** instalado y funcionando
+- ✅ **Docker Socket** (`/var/run/docker.sock`) accesible
+- ✅ **100 MB - 500 MB RAM** (ligero, NodeJS)
+- ✅ **100 MB espacio disco** (imagen + BD config)
+- ✅ **Puerto 8866** (o personalizable)
+- ✅ **Volumen persistente** para `/config` (BD, SSH keys, settings)
+- ✅ **Variable `DOCKMAN_COMPOSE_ROOT`** (ruta absoluta a compose files)
+- ✅ **Navegador moderno** (Chrome, Firefox, Safari, Edge)
 
 > ⚠️ **Importante**: La ruta `COMPOSE_ROOT` debe ser **ABSOLUTA e idéntica** en: variable de entorno + volumen host + volumen container.
 
@@ -90,94 +95,125 @@ docker run -d \
   ghcr.io/ra341/dockman:latest
 ```
 
-### Acceder
+### Acceder y verificar
 
-- **Dashboard**: http://localhost:8866
-- **Verificar estado**:
-  ```bash
-  docker logs dockman
-  docker ps | grep dockman
-  ```
+```bash
+# Acceder a la UI
+http://localhost:8866
+
+# Verificar estado
+docker logs dockman
+docker ps | grep dockman
+```
 
 ## ⚙️ Configuración
 
-1. **`DOCKMAN_COMPOSE_ROOT`** – Ruta absoluta a la carpeta que contiene tus archivos `docker-compose.yml` (ej: `/ruta/absoluta/stacks`). **Debe coincidir exactamente** con el bind mount host↔container.
-2. **`DOCKMAN_LOG_AUTH_WARNING`** – `false` para desactivar el aviso de autenticación si no usas auth.
-3. **Volumen `/config`** – Persistencia de BD SQLite, SSH keys y settings (`/ruta/absoluta/dockman/config:/config`).
-4. **Docker socket** – `/var/run/docker.sock:/var/run/docker.sock` para gestión de contenedores.
-5. **Puerto** – `8866:8866` (modificable en `ports`).
+1. **DOCKMAN_COMPOSE_ROOT** - Ruta absoluta a tus archivos docker-compose (obligatoria)
+2. **DOCKMAN_LOG_AUTH_WARNING** - `false` para desactivar warning de autenticación
+3. **Volumen stacks** - Host y container path **idénticos** (ej: `/ruta/absoluta/stacks:/ruta/absoluta/stacks`)
+4. **Volumen config** - Persistencia BD SQLite, SSH keys, settings (`/ruta/absoluta/dockman/config:/config`)
+5. **Docker socket** - `/var/run/docker.sock:/var/run/docker.sock` para gestión de contenedores
+6. **Puerto** - `8866:8866` (personalizable)
+7. **Restart policy** - `always` para producción
 
 ## 🚀 Primeros pasos
 
-1. **Acceder por primera vez** – Abre `http://localhost:8866`. Verás el dashboard con file browser a la izquierda y editor a la derecha; auto-detecta tus compose files desde `DOCKMAN_COMPOSE_ROOT`.
-2. **Crear primer stack** – File browser → “+ Add File” → Nombre: `docker-compose.yml` → Editor abre con template vacío → Copia-pega tu YAML → Auto-save.
-3. **Gestionar contenedores** – Pestaña “Containers” → Verás todos los containers corriendo → Click en uno → Opciones: logs, shell, restart, stop, rm.
-4. **Ver logs en tiempo real** – Containers → Click container → “Logs” → Terminal con streaming, scroll automático, búsqueda rápida.
-5. **Shell interactivo** – Containers → Click container → “Shell” → Terminal interactiva, ejecuta comandos, cierra al terminar.
-6. **Gestionar imágenes** – Pestaña “Images” → Ver imágenes locales → “Pull” para descargar nuevas → Remove, inspect, tags.
-7. **Editor YAML con formato** – File browser → Click compose file → Editor abre → **Alt+L** para auto-format YAML.
-8. **Búsqueda rápida** – Barra superior → Escribe nombre de container o imagen → Resultados instantáneos + atajos teclado.
-9. **Agregar host remoto (SSH multi-host)** – Settings (engranaje) → “Hosts” → “Add Host” → Nombre, IP, usuario SSH, puerto (22 default) → Copia/ genera SSH key → Dockman gestiona múltiples servidores desde UI central.
-10. **Gestión volúmenes/networks** – Pestañas “Volumes” / “Networks” → Ver todos, crear nuevo, remove, inspect.
-11. **Cambiar tema (Dark mode)** – Settings → Theme → Toggle Dark/Light → Preferencia guardada en BD local.
+1. **Acceder por primera vez** - Abre `http://localhost:8866`, verás dashboard con file browser (izquierda) y editor (derecha)
+2. **Crear primer stack** - File browser → "+ Add File" → Nombre: `docker-compose.yml` → Pega tu YAML → Auto-save
+3. **Gestionar contenedores** - Tab "Containers" → Click container → Logs, shell, restart, stop, rm
+4. **Ver logs en tiempo real** - Containers → Click container → "Logs" → Terminal con streaming
+5. **Shell interactivo** - Containers → Click container → "Shell" → Ejecuta comandos directamente
+6. **Gestionar imágenes** - Tab "Images" → Ver locales, "Pull" para nuevas, remove, inspect, tags
+7. **Editor YAML con format** - Click compose file → Editor abre → **Alt+L** para auto-format YAML
+8. **Búsqueda rápida** - Search bar arriba → Escribe nombre container/imagen → Resultados instantáneos
+9. **Agregar host remoto (SSH)** - Settings (engranaje) → "Hosts" → "Add Host" → Nombre, IP, usuario, puerto, SSH key
+10. **Gestión volúmenes/networks** - Tabs "Volumes" / "Networks" → Crear, eliminar, inspeccionar
+11. **Cambiar tema** - Settings → Theme → Toggle Dark/Light (guardado en BD local)
 
 ## 💡 Casos de uso
 
-- **Homelabs (self-hosted)** – Gestor visual para tu stack de servicios, control total, zero cloud.
-- **DevOps engineers** – Manage múltiples servidores vía SSH, Compose files como source of truth.
-- **Startups/pequeños equipos** – Dashboard compartida, sin complejidad de Kubernetes, Compose suficiente.
-- **Learning Docker** – Aprende Compose visualmente, entiende YAML sin abstracciones.
-- **Migración desde Portainer** – Si quieres acceso directo a Compose files pero UI moderna.
+- 🏠 **Homelabs (self-hosted)** - Gestor visual para tu stack de servicios, control total, zero cloud
+- 👨‍💻 **DevOps engineers** - Maneja múltiples servidores vía SSH, Compose files como source of truth
+- 🚀 **Startups/pequeños equipos** - Dashboard compartida, sin complejidad de Kubernetes
+- 📚 **Learning Docker** - Aprende Compose visualmente, entiende YAML sin abstracciones
+- 🔄 **Migración desde Portainer** - Si quieres acceso directo a Compose files pero UI moderna
 
 ## 🔒 Acceso remoto seguro
 
-```text
-# Caddyfile
+### HTTPS con Caddy (producción)
+
+```caddyfile
 docker.tudominio.com {
     reverse_proxy localhost:8866
 }
 ```
 
-- Acceso: `https://docker.tudominio.com` con HTTPS automático (Let’s Encrypt).
-- **IMPORTANTE**: Dockman **no incluye auth por defecto**. Usa Caddy con `basic_auth` o HTTPS + firewall si expones a red pública.
+Acceso: `https://docker.tudominio.com` con HTTPS automático.
+
+> ⚠️ **IMPORTANTE**: Dockman **no incluye auth por defecto**. Usar Caddy con `basic_auth` o HTTPS + firewall si expones a red pública.
 
 ## 🛠️ Gestión y mantenimiento
 
+### Ver logs
 ```bash
-# Ver logs en tiempo real
 docker logs -f dockman
+```
 
-# Backup de configuración (BD SQLite, SSH keys, settings)
+### Backup de configuración
+```bash
 cp -r /ruta/absoluta/dockman/config ./dockman-config-backup-$(date +%Y%m%d)
+# Contiene: BD SQLite, SSH keys, settings
+```
 
-# Backup de compose files
+### Backup de compose files
+```bash
 cp -r /ruta/absoluta/stacks ./stacks-backup-$(date +%Y%m%d)
+```
 
-# Restore configuración
+### Restore configuración
+```bash
 docker stop dockman
 rm -rf /ruta/absoluta/dockman/config
 cp -r ./dockman-config-backup-YYYYMMDD /ruta/absoluta/dockman/config
 docker start dockman
+```
 
-# Reiniciar container
+### Reiniciar container
+```bash
 docker compose restart dockman
+```
 
-# Actualizar a versión más reciente
+### Actualizar a versión más reciente
+```bash
 docker compose pull
 docker compose up -d
+```
 
-# Monitorear consumo
+### Monitorear consumo
+```bash
 docker stats dockman
-# Típicamente: 100-300 MB RAM, bajo CPU
+# Típicamente: 100-300MB RAM, bajo CPU
+```
 
-# Verificar COMPOSE_ROOT setup
+### Verificar COMPOSE_ROOT setup
+```bash
 docker exec dockman sh -c 'echo $DOCKMAN_COMPOSE_ROOT'
 # Debe mostrar tu ruta absoluta configurada
 ```
 
 ## 📝 Licencia
 
-AGPL-3.0 – Código abierto, comunidad activa, desarrollo continuo.
+**AGPL-3.0** - Código abierto, desarrollo activo, comunidad en GitHub.
 
-> ✨ **Nota**: Este repositorio contiene la configuración Docker y documentación
-> extraída del tutorial de Genbyte: <a href="https://genbyte.blogspot.com/2026/08/como-instalar-dockman-gestor-de-docker.html" target="_blank" rel="noopener noreferrer">Cómo instalar Dockman en Docker - Gestor de Docker Compose autohospedado en Docker</a>
+## 📌 Nota final
+
+> Documentación generada basada en el artículo: **[Cómo instalar Dockman en Docker - Gestor de Docker Compose autohospedado en Docker](https://genbyte.blogspot.com/2026/08/como-instalar-dockman-gestor-de-docker.html)**
+
+---
+
+**Referencias oficiales:**
+- 📦 [GitHub Repository - RA341/dockman](https://github.com/RA341/dockman)
+- 🌐 [Official Website - dockman.radn.dev](https://dockman.radn.dev)
+- 📚 [Official Documentation](https://github.com/RA341/dockman#readme)
+- 🐳 [Docker Hub - ra341/dockman](https://hub.docker.com/r/ra341/dockman)
+- 📦 [GitHub Container Registry - ghcr.io/ra341/dockman](https://github.com/RA341/dockman/pkgs/container/dockman)
